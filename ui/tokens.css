@@ -1,0 +1,59 @@
+/* Eco — tokens de color y tipografía. Los comparten la ventana principal (styles.css), el widget de la bandeja y la píldora. */
+:root {
+  --font: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --bg: #111214;
+  --surface: #1a1b1e;
+  --surface-2: #222327;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --hover: rgba(255, 255, 255, 0.06);
+  --text: #ededef;
+  --muted: #8b8d93;
+  --faint: #55575d;
+  --accent: #ff5a4e;
+  --accent-soft: rgba(255, 90, 78, 0.14);
+  --accent-ink: #ffffff;
+  --warn: #f5b84b;
+  --ok: #5fd08a;
+  --track: rgba(255, 255, 255, 0.09);
+  --meter: rgba(237, 237, 239, 0.82);
+  --seg-bg: #1a1b1e;
+  --seg-thumb: #2c2d32;
+  --pop-bg: #232428;
+  --toast-bg: #2c2d32;
+  --toast-text: #ededef;
+  --focus: rgba(237, 237, 239, 0.9);
+  --danger-text: #ff7c72;
+  --r-lg: 16px;
+  --r-md: 12px;
+  --r-sm: 8px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --pad: clamp(14px, 4.6vw, 22px);
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #f3f3f5;
+  --surface: #ffffff;
+  --surface-2: #f0f0f3;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.17);
+  --hover: rgba(0, 0, 0, 0.05);
+  --text: #18191c;
+  --muted: #6a6c73;
+  --faint: #a7a9b0;
+  --accent: #e5483c;
+  --accent-soft: rgba(229, 72, 60, 0.11);
+  --warn: #cf8a0a;
+  --ok: #2e9e5b;
+  --track: rgba(0, 0, 0, 0.09);
+  --meter: rgba(24, 25, 28, 0.78);
+  --seg-bg: #e7e7eb;
+  --seg-thumb: #ffffff;
+  --pop-bg: #ffffff;
+  --toast-bg: #1f2023;
+  --toast-text: #f2f2f4;
+  --focus: #18191c;
+  --danger-text: #c8352a;
+  color-scheme: light;
+}

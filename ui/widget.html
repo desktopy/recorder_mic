@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Eco widget</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="widget.css">
+<script src="boot.js"></script>
+<script src="mock-tauri.js"></script>
+<script src="widget.js" defer></script>
+</head>
+<body>
+<div class="w" id="w" data-status="idle">
+  <div class="top">
+    <div class="info">
+      <div class="status-line"><span class="dot"></span><span id="statusText">Готово к записи</span></div>
+      <div class="timer" id="timer" role="timer" aria-label="Время записи">00:00</div>
+    </div>
+    <div class="ctl">
+      <button class="pause-btn is-disabled" id="btnPause" type="button" aria-label="Пауза" aria-disabled="true" title="Пауза"><span class="ico" id="pauseIco"></span></button>
+      <span class="rec-wrap"><span class="ring" id="ring" aria-hidden="true"></span><button class="rec-btn" id="btnRec" type="button" aria-label="Начать запись" title="Начать запись"><span class="rec-core"></span></button></span>
+    </div>
+  </div>
+  <div class="srcs">
+    <div class="src" id="src-input">
+      <span class="ico" id="icoMic"></span><span class="lbl">Mic</span>
+      <div class="meter" role="img" aria-label="Nivel del micrófono"><div class="meter-fill"></div></div>
+      <button class="switch" id="swInput" type="button" role="switch" aria-checked="true" aria-label="Записывать микрофон"></button>
+    </div>
+    <div class="src" id="src-output">
+      <span class="ico" id="icoSpk"></span><span class="lbl">Система</span>
+      <div class="meter" role="img" aria-label="Nivel del audio del sistema"><div class="meter-fill"></div></div>
+      <button class="switch" id="swOutput" type="button" role="switch" aria-checked="true" aria-label="Записывать системный звук"></button>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="note" id="note" role="status" aria-live="polite"></span>
+    <button class="link" id="btnOpen" type="button">Abrir Eco<span class="ico" id="icoOpen"></span></button>
+  </div>
+</div>
+</body>
+</html>

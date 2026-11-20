@@ -1,0 +1,29 @@
+# Compilación
+src-tauri/target/
+target/
+dist/
+node_modules/
+
+# Audio y registros
+*.wav
+*.log
+
+# Salida de las pruebas de interfaz
+tools/ui-tests/out/
+
+# Local runtime data, packaging and caches
+*.mp3
+*.flac
+*.ogg
+*.m4a
+*.exe
+*.dll
+*.crate
+*.zip
+release-staging/
+settings.json
+app-prefs.json
+session.json
+.env
+.env.*
+__pycache__/

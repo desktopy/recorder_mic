@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>recorder_mic — direct MP3</title>
+<link rel="stylesheet" href="styles.css">
+<script src="boot.js"></script>
+<script src="mock-tauri.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="app" id="app" data-status="idle">
+
+  <header class="titlebar" data-tauri-drag-region>
+    <div class="brand" data-tauri-drag-region>
+      <span class="ico logo" data-icon="logo" data-tauri-drag-region></span>
+      <span class="brand-name" data-tauri-drag-region>recorder_mic</span>
+      <span class="status-dot" id="statusDot" role="img" aria-label="Неактивно" data-tauri-drag-region></span>
+    </div>
+    <div class="win-controls">
+      <button class="win-btn" id="btnMin" type="button" aria-label="Свернуть"><span class="ico" data-icon="min"></span></button>
+      <button class="win-btn close" id="btnClose" type="button" aria-label="Закрыть"><span class="ico" data-icon="close"></span></button>
+    </div>
+  </header>
+
+  <nav class="nav" aria-label="Главная навигация">
+    <div id="tabs"></div>
+    <button class="icon-btn bordered" id="btnSettings" type="button" aria-label="Настройки" aria-pressed="false" data-tip="Настройки"><span class="ico" data-icon="gear"></span></button>
+  </nav>
+
+  <main class="views">
+
+    <section class="view" id="view-record" role="tabpanel" aria-labelledby="tab-record">
+      <div class="stage" id="stage">
+        <div class="status-line" id="statusLine"><span class="dot"></span><span id="statusText">Готово к записи</span></div>
+        <div class="timer" id="timer" role="timer" aria-label="Время записи"><span id="tMain">00:00</span><span class="dec" id="tDec">.0</span></div>
+        <div class="rec-row">
+          <span></span>
+          <div class="rec-wrap" id="recWrap">
+            <span class="ring" id="ring" aria-hidden="true"></span>
+            <button class="rec-btn" id="btnRec" type="button" aria-label="Начать запись"><span class="rec-core"></span></button>
+          </div>
+          <div class="pause-wrap" id="pauseWrap">
+            <button class="pause-btn is-disabled" id="btnPause" type="button" aria-label="Пауза" aria-disabled="true"><span class="ico" data-icon="pause" id="pauseIco"></span></button>
+          </div>
+        </div>
+      </div>
+      <div class="sources" id="sources"></div>
+      <div class="mode">
+        <div id="modeSeg"></div>
+        <p class="help" id="modeHelp" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="view" id="view-recordings" role="tabpanel" aria-labelledby="tab-recordings">
+      <div class="toolbar" id="recToolbar">
+        <span class="count" id="recCount"></span>
+        <button class="btn ghost" id="btnOpenDir2" type="button"><span class="ico" data-icon="folder"></span>Открыть папку</button>
+      </div>
+      <div class="rec-list" id="recList"></div>
+      <div class="empty" id="recEmpty">
+        <span class="art" data-icon="empty"></span>
+        <h3>Пока нет записей</h3>
+        <p>Здесь появятся ваши записи.</p>
+        <button class="btn" id="btnGoRecord" type="button">Перейти к записи</button>
+      </div>
+    </section>
+
+    <section class="view" id="view-settings" aria-labelledby="settingsTitle">
+      <h2 class="view-title" id="settingsTitle">Настройки <button class="btn" id="btnChanges" type="button" aria-label="Описание изменений">Что нового</button></h2>
+      <div class="set-card"><button class="btn" id="btnProject" type="button">github.com/EndingVE/Eco-Windows-Recorder ↗</button></div>
+      <div class="set-group">
+        <div>
+          <div class="set-label">Папка сохранения</div>
+          <div class="set-card">
+            <div class="path-box"><span class="ico" data-icon="folder"></span><span class="p" id="outPath"></span></div>
+            <div class="btn-row">
+              <button class="btn" id="btnChoose" type="button">Изменить…</button>
+              <button class="btn" id="btnOpenDir" type="button">Открыть папку</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="set-label">Формат аудио</div>
+          <div class="set-card"><div id="fmtSeg"></div></div>
+        </div>
+        <div>
+          <div class="set-label">Уровни</div>
+          <div class="set-card">
+            <div class="set-row">
+              <div><div class="t" id="lblMonitor">Показывать уровни без записи</div><div class="d">Показывать уровень звука до начала записи.</div></div>
+              <button class="switch" id="swMonitor" type="button" role="switch" aria-checked="true" aria-labelledby="lblMonitor"></button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="set-label">Аудио</div>
+          <div class="set-card">
+            <div class="set-row">
+              <div><div class="t" id="lblAgcSet">Автоуровень голоса</div><div class="d">Выравнивает громкость голоса без усиления тишины и фонового шума.</div></div>
+              <button class="switch" id="swAgc" type="button" role="switch" aria-checked="true" aria-labelledby="lblAgcSet"></button>
+            </div>
+            <div class="set-row">
+              <div><div class="t" id="lblDuck">Приоритет голоса в миксе</div><div class="d">Приглушает звук компьютера во время речи. Влияет только на микс.</div></div>
+              <button class="switch" id="swDuck" type="button" role="switch" aria-checked="true" aria-labelledby="lblDuck"></button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="set-label">Тема</div>
+          <div class="set-card"><div id="themeSeg"></div></div>
+        </div>
+        <div>
+          <div class="set-label">Окно и область уведомлений</div>
+          <div class="set-card">
+            <div class="set-row">
+              <div><div class="t" id="lblCloseTray">Сворачивать в область уведомлений</div><div class="d">При закрытии окна Eco продолжает работать в области уведомлений.</div></div>
+              <button class="switch" id="swCloseTray" type="button" role="switch" aria-checked="true" aria-labelledby="lblCloseTray"></button>
+            </div>
+            <div class="set-row">
+              <div><div class="t" id="lblAutostart">Запускать с Windows</div><div class="d">Запускать в области уведомлений при входе в систему.</div></div>
+              <button class="switch" id="swAutostart" type="button" role="switch" aria-checked="false" aria-labelledby="lblAutostart"></button>
+            </div>
+            <div class="set-row">
+              <div><div class="t" id="lblPill">Плавающий таймер записи</div><div class="d">Маленький таймер поверх окон во время записи.</div></div>
+              <button class="switch" id="swPill" type="button" role="switch" aria-checked="false" aria-labelledby="lblPill"></button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="set-label">Горячие клавиши</div>
+          <div class="set-card">
+            <div class="shortcuts" id="shortcuts">
+              <div class="sc-row" id="hkRow-toggle"><div class="sc-lbl">Начать / остановить<div class="sub">В любом приложении</div><div class="hk-busy" hidden><span class="dot"></span>Используется другим приложением</div></div><div class="sc-ctl" data-hk="toggle"></div></div>
+              <div class="sc-row" id="hkRow-pause"><div class="sc-lbl">Пауза / продолжить<div class="sub">В любом приложении</div><div class="hk-busy" hidden><span class="dot"></span>Используется другим приложением</div></div><div class="sc-ctl" data-hk="pause"></div></div>
+              <div class="sc-row"><div>Начать / остановить<div class="sub">В окне приложения</div></div><div class="sc-keys"><kbd>Пробел</kbd></div></div>
+              <div class="sc-row"><div>Пауза / продолжить<div class="sub">В окне приложения</div></div><div class="sc-keys"><kbd>P</kbd></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+  <div id="modalRoot"></div>
+  <div class="tip" id="tip" role="tooltip" hidden></div>
+</div>
+</body>
+</html>

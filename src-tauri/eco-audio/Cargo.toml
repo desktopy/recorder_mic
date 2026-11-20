@@ -1,0 +1,27 @@
+[package]
+name = "eco-audio"
+version = "0.1.0"
+edition = "2021"
+description = "Motor de audio de Eco (sin dependencias de Tauri)"
+license = "MIT"
+repository = "https://github.com/EndingVE/Eco-Windows-Recorder"
+
+[lib]
+name = "eco_audio"
+path = "src/lib.rs"
+
+[dependencies]
+cpal = "0.16"
+hound = "3.5"
+rusty_mp3 = { path = "../../third-party/rusty_mp3-1.1.0", default-features = false }
+ringbuf = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+trash = "5"
+
+[dev-dependencies]
+image = { version = "0.25", default-features = false, features = ["png"] }
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.54", features = ["Win32_Media_Audio", "Win32_Media_Audio_Endpoints", "Win32_System_Com", "Win32_System_Com_StructuredStorage", "Win32_Devices_FunctionDiscovery", "Win32_UI_Shell_PropertiesSystem", "Win32_System_Variant", "Win32_Foundation", "Win32_UI_Shell"] }

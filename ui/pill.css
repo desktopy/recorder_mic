@@ -1,0 +1,21 @@
+/* Eco — píldora flotante de grabación. Ventana transparente; la píldora se dibuja aquí. */
+:root { color-scheme: normal; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; overflow: hidden; background: transparent; }
+body { color: var(--text); font: 400 13px/1.4 var(--font); -webkit-font-smoothing: antialiased; cursor: default; user-select: none; padding: 6px 8px; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.pill { height: 100%; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px; border-radius: 999px; background: var(--pop-bg); border: 1px solid var(--border-strong); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; animation: pulse 1.6s ease-in-out infinite; }
+.pill[data-status='paused'] .dot { background: var(--warn); animation: none; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+.timer { flex: 1; font-size: 17px; font-weight: 400; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; white-space: nowrap; }
+.pill[data-status='paused'] .timer { opacity: 0.6; }
+.stop { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); transition: transform 0.12s var(--ease), filter 0.15s; flex: none; }
+.stop:hover { filter: brightness(1.1); }
+.stop:active { transform: scale(0.92); }
+.stop .sq { width: 10px; height: 10px; border-radius: 2px; background: var(--accent-ink); }
+.stop.busy { opacity: 0.5; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .dot { animation: none; } }

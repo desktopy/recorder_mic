@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eco pill</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="pill.css">
+<script src="boot.js"></script>
+<script src="mock-tauri.js"></script>
+<script src="pill.js" defer></script>
+</head>
+<body>
+<div class="pill" id="pill" data-status="recording" data-tauri-drag-region>
+  <span class="dot" data-tauri-drag-region></span>
+  <span class="timer" id="timer" role="timer" aria-label="Время записи" data-tauri-drag-region>00:00</span>
+  <button class="stop" id="btnStop" type="button" aria-label="Остановить запись" title="Остановить запись"><span class="sq"></span></button>
+</div>
+</body>
+</html>
