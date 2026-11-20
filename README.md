@@ -1,3 +1,5 @@
+<img src="src-tauri/icons/128x128.png" alt="recorder_mic" width="96">
+
 # recorder_mic
 
 A lightweight Windows microphone recorder with direct MP3 recording, based on [Eco by EndingVE](https://github.com/EndingVE/Eco-Windows-Recorder).
